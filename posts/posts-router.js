@@ -4,6 +4,26 @@ const router = express.Router();
 router.use(express.json());
 const db = require('../data/db');
 
+router.post('/', (req, res) => {
+    db.insert(req.body)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error posting new data /api/posts', error })
+        })
+})
+
+router.post('/:id/comments', (req, res) => {
+    db.insertComment(req.body)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error posting new comment /api/posts/:id/comments', error })
+        })
+})
+
 router.get('/', (req, res) => {
     db.find(req.query)
         .then(posts => {

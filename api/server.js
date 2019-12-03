@@ -5,6 +5,27 @@ server.use(express.json());
 const db = require ('../data/db');
 server.use('/api/posts', postsRouter);
 
+
+server.post('/api/posts', (req, res) => {
+    db.insert(req.body)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error posting new data /api/posts', error })
+        })
+})
+
+server.post('/api/posts/:id/comments', (req, res) => {
+    db.insertComment(req.body)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error posting new comment /api/posts/:id/comments', error })
+        })
+})
+
 server.get('/api/posts', (req, res) => {
     db.find(req.query)
         .then(posts => {
