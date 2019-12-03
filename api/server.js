@@ -32,7 +32,7 @@ server.get('/api/posts', (req, res) => {
             res.status(200).json(posts);
         })
         .catch(error => {
-            res.status(500).json({ message: 'Error getting posts /api/posts' })
+            res.status(500).json({ message: 'Error getting posts /api/posts', error })
         });
 });
 
@@ -42,7 +42,7 @@ server.get('/api/posts/:id', (req, res) => {
             res.status(200).json(postsId);
         })
         .catch(error => {
-            res.status(500).json({ message: 'Error getting posts IDs /api/posts/:id' })
+            res.status(500).json({ message: 'Error getting posts IDs /api/posts/:id', error })
         });
 });
 
@@ -53,9 +53,31 @@ server.get('/api/posts/:id/comments', (req, res) => {
             res.status(200).json(comments);
         })
         .catch(error => {
-            res.status(500).json({ message: 'Error getting comments /api/posts/:id/comments' });
+            res.status(500).json({ message: 'Error getting comments /api/posts/:id/comments', error });
         });
 });
+
+server.delete('/api/posts/:id', (req, res) => {
+    const id = req.params.id;
+    db.remove(id)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error removing the comment /api/posts/:id', error });
+        });
+});
+
+// server.put('/api/posts/:id', (req, res) => {
+//     const id = req.params.id;
+//     db.update(id, req.body)
+//         .then(comments => {
+//             res.status(200).json(comments);
+//         })
+//         .catch(error => {
+//             res.status(500).json({ message: 'Error removing the comment /api/posts/:id', error });
+//         });
+// });
 
 
 

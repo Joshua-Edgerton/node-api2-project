@@ -55,6 +55,29 @@ router.get('/:id/comments', (req, res) => {
         });
 });
 
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    db.remove(id)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error removing the comment /api/posts/:id', error });
+        });
+});
+
+router.put('/:id', (req, res) => {
+    const changes = req.body;
+    const id = req.params.id;
+    db.update(id, changes)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error updating the comment /api/posts/:id', error });
+        });
+});
+
 
 
 module.exports = router;

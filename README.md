@@ -73,8 +73,7 @@ A Comment in the database has the following structure:
 
 Configure the API to handle to the following routes:
 
-| Method | Endpoint                | Description                                                                                                                                                                                            |
-| POST   | /api/posts/:id/comments | Creates a comment for the post with the specified id using information sent inside of the `request body`.                                                                                                                                                                                |
+| Method | Endpoint                | Description                                                                                                                                                                                                |
 | DELETE | /api/posts/:id          | Removes the post with the specified id and returns the **deleted post object**. You may need to make additional calls to the database in order to satisfy this requirement. |
 | PUT    | /api/posts/:id          | Updates the post with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**.                                           |
 
