@@ -94,17 +94,19 @@ router.put('/:id', (req, res) => {
     const id = req.params.id;
     db.update(id, changes)
         .then(updated => {
-            console.log(updated)
+            console.log(updated, req.body)
             if (updated === 1 && req.body.title && req.body.contents) {
             res.status(200).json({ message: "amount of elements updated", updated });
-            } else if (!req.body.title || !req.body.contents) {
-                res.status(400).json({ message: "Please provide title and contents" })
             } else if (updated === 0) {
                 res.status(404).json({ message: "The post with the specified ID does not exist" });
             }
         })
         .catch(error => {
-            res.status(500).json({ message: 'Error updating the comment /api/posts/:id', error });
+            if (!req.body.title || !req.body.contents) {
+                res.status(400).json({ message: "Please provide title and contents" })
+            } else {
+            res.status(500).json({ message: ' Error updating the comment /api/posts/:id', error});
+            }
         });
 });
 
