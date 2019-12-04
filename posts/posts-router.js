@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
 router.get("/:id", (req, res) => {
     db.findById(req.params.id)
       .then(post => {
-        if (post) {
+        if (post[0]) {
           res.status(200).json(post);
         } else {
           res.status(404).json({ message: "Post not found" });
@@ -64,18 +64,18 @@ router.get("/:id", (req, res) => {
   });
 
 router.get('/:id/comments', (req, res) => {
-    if (!req.params.id) {
-        res.status(404).json({ message: "The post with the specified ID does not exist." })
-    } else {
     const id = req.params.id
     db.findPostComments(id)
         .then(comments => {
+            if (comments[0]){
             res.status(200).json(comments);
+            } else {
+                res.status(404).json({ message: "The post with the specified ID does not exist." }); 
+            }
         })
         .catch(error => {
             res.status(500).json({ message: 'Error getting comments /api/posts/:id/comments', error });
         })
-    }
 });
 
 router.delete('/:id', (req, res) => {
